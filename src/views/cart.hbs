@@ -1,0 +1,22 @@
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"> Producto </th>
+        <th scope="col"> Cantidad </th>
+        <th scope="col"> Acción </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products.products}}
+        <tr>
+          <td> {{this._id}}</td>
+          <td> {{this.quantity}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <form action="/api/carts/{{cid}}/purchase" method="get">
+    <button type="submit" class="btn btn-primary">Terminar compra</button>
+  </form>
+</div>

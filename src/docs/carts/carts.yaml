@@ -1,0 +1,245 @@
+paths:
+  /api/carts:
+    get:
+      summary: Obtiene todos los carritos de la app.
+      tag:
+        -Carts
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna un arreglo con todos los carts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+    post:
+      summary: Crea un nuevo carrito.
+      tag:
+        -Carts
+      responses:
+        "200":
+          description: respuesta exitosa! retorna el carrito creado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+
+  /api/carts/{cid}:
+    put:
+      summary: Actualiza el carrito obtenido por cid.
+      tag:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito que se desea actualizar.
+          schema:
+            $type: String
+      requestBody:
+        description: Actualiza el carrito
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna el arreglo con el carrito actualizado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+    delete:
+      summary: Elimina todos los productos del carrito obtenido por cid.
+      tag:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito del que desea eliminar todos los productos.
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! retorna la confirmación de que los productos del carrito se eliminaron.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Añade el producto obtenido por pid al carrito obtenido por cid.
+      tag:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito que se desea añadir productos.
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea añadir.
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna el arreglo con el carrito actualizado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+    put:
+      summary: Actualiza la cantidad del producto obtenido por pid dentro del carrito obtenido por cid.
+      tag:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito del que desea actualizar el producto.
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea actualizar la cantidad.
+          schema:
+            $type: String
+      requestBody:
+        description: Colocar solo el campo quantity del producto y actualizarlo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna el arreglo con el carrito actualizado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+    delete:
+      summary: Elimina el producto obtenido por pid del carrito obtenido por cid.
+      tag:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito del que desea eliminar el producto.
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea eliminar.
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! retorna la confirmación de que el producto del carrito se eliminó.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+  /api/carts/{cid}/purchase:
+    get:
+      summary: Realiza la compra del carrito.
+      tag:
+        -Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito del que desea realizar la compra.
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna el ticket con la compra del carrito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: se envió un dato no válido.
+        "500":
+          description: Error inesperado, no se pudo manejar el proceso.
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id: 
+          type: ObjectId
+          description: Id autogenerado de Mongo.
+        products: 
+          type: Array
+          description: Array de productos del carrito
+          quantity: 
+            type: Number
+            description: Cantidad de productos
+          _id: 
+            type: String
+            description: Id del producto autogenerado de Mongo.
+      example:
+        _id: ObjectId("6595ee19adf457507555793f")
+        products: [
+          {
+            quantity: 1,
+            _id: 65dfcc12892f4ae3d9ff17b1
+          },
+          {
+            quantity: 1,
+            _id: 65ff6a8dfc45ae3fae84f745
+          }
+        ]
+           

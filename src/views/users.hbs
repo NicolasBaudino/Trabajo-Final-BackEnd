@@ -1,0 +1,23 @@
+{{!-- Vista de usuario en Handlebars --}}
+<div class="user-info">
+    <h2>Información del Usuario</h2>
+    <p>Nombre: {{user.first_name}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Rol: {{user.role}}</p>
+</div>
+
+{{!-- Formulario para modificar el rol del usuario --}}
+<form action="/users/{{user.id}}?_method=PUT" method="POST">
+    <h2>Modificar Rol</h2>
+    <label for="role">Nuevo Rol:</label>
+    <select name="role" id="role">
+        <option value="premium">Premium</option>
+        <option value="user">User</option>
+    </select>
+    <button type="submit">Actualizar Rol</button>
+</form>
+
+{{!-- Botón para eliminar el usuario --}}
+<form action="/users/{{user.id}}?_method=DELETE" method="POST">
+    <button type="submit">Eliminar Usuario</button>
+</form>
